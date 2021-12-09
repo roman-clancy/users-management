@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'mvn -B test'
+                sh 'mvn -B test surefire-report:report'
                 junit '**/target/*.xml'
             }
         }
