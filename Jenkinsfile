@@ -14,6 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'mvn -B test'
+                junit '**/target/*.xml'
             }
         }
     }
