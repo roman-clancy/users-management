@@ -10,12 +10,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn -B test surefire-report:report'
+                sh 'mvn -B clean package surefire-report:report'
             }
             post {
                 always {
