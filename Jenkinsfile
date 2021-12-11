@@ -1,12 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.8.1-adoptopenjdk-11'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent any
     stages {
         stage('Build') {
+            agent {
+                image 'maven:3.8.4-openjdk-11'
+                args '-v $HOME/.m2:/root/.m2'
+                reuseNode true
+            }
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
@@ -15,11 +15,18 @@ pipeline {
             steps {
                 sh 'mvn -B test surefire-report:report'
             }
+            post {
+                always {
+                    junit '**/target/**/*.xml'
+                }
+            }
         }
-    }
-    post {
-        always {
-            junit '**/target/**/*.xml'
+        stage('Building image') {
+            steps{
+                script {
+                    docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
         }
     }
 }
