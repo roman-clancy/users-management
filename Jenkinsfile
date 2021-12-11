@@ -3,9 +3,11 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                image 'maven:3.8.4-openjdk-11'
-                args '-v $HOME/.m2:/root/.m2'
-                reuseNode true
+                docker {
+                    image 'maven:3.8.4-openjdk-11'
+                    args '-v $HOME/.m2:/root/.m2'
+                    reuseNode true
+                }
             }
             steps {
                 sh 'mvn -B -DskipTests clean package'
