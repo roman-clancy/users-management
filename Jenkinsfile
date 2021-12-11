@@ -1,7 +1,8 @@
 pipeline {
     environment {
-        registry = "romanclancy/roman_clancy"
+        registry = "romanclancy/users-management"
         registryCredential = 'DockerHubCred'
+        dockerImage = ''
     }
     agent any
     stages {
@@ -25,8 +26,22 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
+            }
+        }
+        stage('Publish image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
