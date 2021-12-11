@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        registry = "romanclancy/roman_clancy"
+        registryCredential = 'DockerHubCred'
+    }
     agent any
     stages {
         stage('Build') {
