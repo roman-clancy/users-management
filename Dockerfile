@@ -1,9 +1,9 @@
-FROM openjdk:11 as build
+FROM openjdk:17 as build
 
 ADD target/app.jar /app.jar
 RUN jar -xf app.jar
 
-FROM openjdk:11
+FROM openjdk:17
 
 COPY --from=build /BOOT-INF/lib /app/lib/
 COPY --from=build /META-INF /app/META-INF

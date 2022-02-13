@@ -9,10 +9,10 @@
     <packaging>jar</packaging>
     <description>Simple API for user&apos;s data managment</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <spring.boot.version>2.5.4</spring.boot.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencyManagement>
